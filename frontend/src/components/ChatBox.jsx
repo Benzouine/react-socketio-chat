@@ -5,8 +5,8 @@ function ChatBox({ messages }) {
   return (
     <div style={{ border: '1px solid #ddd', padding: '10px', marginBottom: '10px', height: '300px', overflowY: 'scroll' }}>
       {messages.map((msg, index) => (
-        <div key={index} style={{ color: msg.color }}>
-         <span style={{ fontSize: '0.8em', color: '#888' }}>{msg.timestamp}</span> <strong>{msg.displayName}</strong> : {msg.message}
+        <div key={index} >
+         <span style={{ fontSize: '0.8em', color: '#888' }}>{msg.timestamp}</span> <strong style={{ color: msg.color }}>{msg.displayName}</strong> : {msg.message}
         </div>
       ))}
     </div>

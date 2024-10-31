@@ -7,28 +7,33 @@ const app = express();
 const server = http.createServer(app);
 
 // Apply CORS middleware
-app.use(cors({ origin: "http://localhost:3000" }));
+app.use(cors({ origin: 'http://localhost:5173' })); // No trailing slash
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
+    origin: 'http://localhost:5173', // No trailing slash here as well
+    methods: ['GET', 'POST'],
   },
 });
 
 const nicknames = {};
 const colors = {}; // Store colors for each user
 const colorList = [
-  "#e6194b",
-  "#3cb44b",
-  "#ffe119",
-  "#4363d8",
-  "#f58231",
-  "#911eb4",
-  "#46f0f0",
-  "#f032e6",
+  "#002F5D",
+  "#23511E",
+  "#003737",
+  "#8F4700",
+  "#2A265F",
+  "#C58C00",
+  "#2C0000",
+  "#C9190B",
+  "#EC7A08",
+  "#009596",
+  "#06C",
+  "#004B95",
+  "#38812F",
+  "#5752D1"
 ];
-
 function getRandomColor() {
   return colorList[Math.floor(Math.random() * colorList.length)];
 }
