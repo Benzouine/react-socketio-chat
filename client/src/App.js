@@ -8,6 +8,7 @@ function App() {
   const [nickname, setNickname] = useState('');
   const [isNicknameSet, setIsNicknameSet] = useState(false);
   const [typingUser, setTypingUser] = useState('');
+  const [onlineUsers, setOnlineUsers] = useState({});
 
   useEffect(() => {
     socket.on('chat message', (msg) => {
@@ -22,12 +23,24 @@ function App() {
       setTypingUser('');
     });
 
+    // Listen for user connection and disconnection updates
+    socket.on('user connected', (users) => {
+      setOnlineUsers(users);
+    });
+
+    socket.on('user disconnected', (users) => {
+      setOnlineUsers(users);
+    });
+
     return () => {
       socket.off('chat message');
       socket.off('typing');
       socket.off('stop typing');
+      socket.off('user connected');
+      socket.off('user disconnected');
     };
   }, []);
+  
 
   const handleNicknameSubmit = (e) => {
     e.preventDefault();
@@ -57,6 +70,14 @@ function App() {
         </form>
       ) : (
         <>
+          <div style={{ marginBottom: '10px' }}>
+            <strong>Online Users:</strong>
+            <ul>
+              {Object.values(onlineUsers).map((user, index) => (
+                <li key={index}>{user}</li>
+              ))}
+            </ul>
+          </div>
           <ChatBox messages={messages} />
           {typingUser && <p>{typingUser} is typing...</p>}
           <MessageInput onSendMessage={handleSendMessage} />
